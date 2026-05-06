@@ -1,0 +1,34 @@
+database:
+  source:
+    driver: "mssql+pyodbc"
+    server: "localhost"
+    port: 1433
+    database: "SourceDB"
+    username: "sa"
+    password: "${SQL_SERVER_PASSWORD}"
+    options:
+      trust_cert: "true"
+
+  warehouse:
+    driver: "postgresql"
+    server: "localhost"
+    port: 5432
+    database: "Warehouse"
+    username: "postgres"
+    password: "${POSTGRES_PASSWORD}"
+
+etl:
+  batch_size: 10000
+  watermark_column: "modified_date"
+  extraction:
+    enabled: true
+    incremental: true
+  transformation:
+    scd_type: 2
+  load:
+    enabled: true
+    mode: "upsert"
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

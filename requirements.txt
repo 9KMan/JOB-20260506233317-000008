@@ -1,7 +1,11 @@
-pandas>=1.5.0
-sqlalchemy>=2.0.0
-pyodbc>=4.0.0
-psycopg2-binary>=2.9.0
-pyyaml>=6.0
-pytest>=7.0.0
-pytest-cov>=4.0.0
+# Airflow + dbt ETL Pipeline
+apache-airflow==2.9.0
+dbt-core==1.7.0
+dbt-sqlserver==1.7.0
+pyodbc==5.0.1
+pandas==2.2.0
+pyarrow==14.0.2
+great-expectations==0.18.0
+mssql+pyodbc://user:pass@host:1433/database
+sqlalchemy==2.0.25
+python-dotenv==1.0.0

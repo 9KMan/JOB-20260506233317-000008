@@ -1,0 +1,73 @@
+version: 2
+
+sources:
+  - name: staging
+    description: Staging layer from SQL Server ETL load
+    schema: staging
+    tables:
+      - name: staging_customers
+        description: Raw customer data from source system
+        columns:
+          - name: customer_id
+            description: Primary key from source CRM
+            tests:
+              - unique
+              - not_null
+          - name: customer_name
+            description: Full name
+          - name: email
+          - name: phone
+          - name: city
+          - name: state
+          - name: country
+          - name: created_at
+          - name: updated_at
+            description: Used as watermark column for incremental extraction
+
+      - name: staging_products
+        description: Raw product catalog data
+        columns:
+          - name: product_id
+            tests:
+              - unique
+              - not_null
+          - name: product_name
+          - name: category
+          - name: subcategory
+          - name: unit_cost
+          - name: unit_price
+          - name: supplier
+          - name: updated_at
+
+      - name: staging_sales
+        description: Fact table — sales transactions
+        columns:
+          - name: sale_id
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            tests:
+              - not_null
+            relationships:
+              - to: ref('dim_customer')
+                field: customer_key
+          - name: product_id
+          - name: location_id
+          - name: quantity
+          - name: unit_price
+          - name: total_amount
+          - name: sale_date
+          - name: updated_at
+
+      - name: staging_locations
+        columns:
+          - name: location_id
+            tests:
+              - unique
+              - not_null
+          - name: location_name
+          - name: city
+          - name: state
+          - name: country
+          - name: updated_at

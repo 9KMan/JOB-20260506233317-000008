@@ -1,0 +1,22 @@
+name: sqlserver_dw
+version: 1.0.0
+config-version: 2
+
+require-dbt-version: [">=1.7.0", "<2.0.0"]
+
+vars:
+  watermark_column: "updated_at"
+  source_schema: "staging"
+  target_schema: "dw"
+
+models:
+  sqlserver_dw:
+    staging:
+      +schema: staging
+      +materialized: view
+    marts:
+      +schema: dw
+      +materialized: table
+    intermediate:
+      +schema: dw
+      +materialized: view

@@ -1,0 +1,93 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: Customer dimension with SCD Type 2
+    columns:
+      - name: dim_key
+        tests:
+          - unique
+          - not_null
+      - name: customer_key
+        tests:
+          - unique
+          - not_null
+      - name: email
+        tests:
+          - unique
+      - name: effective_from
+      - name: effective_to
+      - name: is_current
+        tests:
+          - not_null
+
+  - name: dim_product
+    description: Product dimension with SCD Type 2
+    columns:
+      - name: dim_key
+        tests:
+          - unique
+          - not_null
+      - name: product_key
+        tests:
+          - unique
+          - not_null
+      - name: gross_margin_pct
+        tests:
+          - not_null
+      - name: is_current
+        tests:
+          - not_null
+
+  - name: dim_location
+    description: Location dimension
+    columns:
+      - name: dim_key
+        tests:
+          - unique
+          - not_null
+      - name: location_key
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_date
+    description: Calendar dimension
+    columns:
+      - name: date_dim_key
+        tests:
+          - unique
+          - not_null
+      - name: date_value
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_sales
+    description: Sales fact table
+    columns:
+      - name: sale_key
+        tests:
+          - unique
+          - not_null
+      - name: customer_dim_key
+        tests:
+          - not_null
+          - relationships:
+              - to: ref('dim_customer')
+                field: dim_key
+      - name: product_dim_key
+        tests:
+          - not_null
+          - relationships:
+              - to: ref('dim_product')
+                field: dim_key
+      - name: quantity
+        tests:
+          - not_null
+      - name: total_amount
+        tests:
+          - not_null
+      - name: gross_profit
+        tests:
+          - not_null

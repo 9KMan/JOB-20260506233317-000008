@@ -1,0 +1,27 @@
+sqlserver:
+  target: prod
+  outputs:
+    dev:
+      type: sqlserver
+      driver: "ODBC Driver 17 for SQL Server"
+      server: "{{ env_var('DBT_SQLSERVER_SERVER') }}"
+      port: 1433
+      database: "{{ env_var('DBT_SQLSERVER_DATABASE') }}"
+      schema: "{{ env_var('DBT_SQLSERVER_SCHEMA') }}"
+      authentication: username_password
+      username: "{{ env_var('DBT_SQLSERVER_USER') }}"
+      password: "{{ env_var('DBT_SQLSERVER_PASSWORD') }}"
+      encrypt: true
+      trust_cert: false
+    prod:
+      type: sqlserver
+      driver: "ODBC Driver 17 for SQL Server"
+      server: "{{ env_var('DBT_SQLSERVER_SERVER') }}"
+      port: 1433
+      database: "{{ env_var('DBT_SQLSERVER_DATABASE') }}"
+      schema: dw
+      authentication: username_password
+      username: "{{ env_var('DBT_SQLSERVER_USER') }}"
+      password: "{{ env_var('DBT_SQLSERVER_PASSWORD') }}"
+      encrypt: true
+      trust_cert: false
